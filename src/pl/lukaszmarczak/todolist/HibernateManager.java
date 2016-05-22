@@ -4,14 +4,12 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.engine.transaction.internal.NullSynchronizationException;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static pl.lukaszmarczak.todolist.TodoDbManager.log;
-
+import static pl.lukaszmarczak.todolist.TodoUtils.log;
 
 /**
  * TodoList
@@ -20,7 +18,7 @@ import static pl.lukaszmarczak.todolist.TodoDbManager.log;
  * @since 19 maj 2016.
  * 17 : 30
  */
-public class TodoDbHibernateManager {
+public class HibernateManager {
 
     public static List<A> getToDoItems() {
         List<A> items = new ArrayList<>();
@@ -29,17 +27,17 @@ public class TodoDbHibernateManager {
         Session session = sessionFactory.openSession();
         Criteria criteria = session.createCriteria(
                 A.class);
-
-
-// To get records having salary less than 2000
-        //criteria.add(Restrictions.lt("salary", 2000));
         List<A> users = (List<A>) criteria.list();
+        // To get records having salary less than 2000
+        //criteria.add(Restrictions.lt("salary", 2000));
+
+
         // List<A> users = (List<A>)session.createSQLQuery("SELECT * FROM A").addEntity(A.class).list();
         log("results:" + (users != null ? users.size() : "null ;("));
         if (users != null) for (A it : users) System.out.println("next todo: " + it.getText());
         items.addAll(users);
         System.out.println("transaction saved");
-        session.close();
+     //   session.close();
 
         return items;
     }
@@ -59,10 +57,10 @@ public class TodoDbHibernateManager {
         item.setDate(date);
         session.save(item);
 
-        System.out.println("1. Employee save called with transaction, id");
+        log("1. Employee save called with transaction, id");
         tx1.commit();
         System.out.println("transaction saved");
-        session.close();
+       // session.close();
         System.out.println("session closed");
 
     }
@@ -86,7 +84,7 @@ public class TodoDbHibernateManager {
         session.update(toUpdateItem);
         System.out.println("6. Before committing save transaction");
         tx1.commit();
-        session.close();
+        //session.close();
     }
 
     public static void delete(String itemId) {
@@ -94,7 +92,6 @@ public class TodoDbHibernateManager {
 
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
-        //save example - without transaction
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
@@ -104,28 +101,20 @@ public class TodoDbHibernateManager {
             transaction.rollback();
             e.printStackTrace();
         }
-
-        //   session.delete(toUpdateItem);
         System.out.println("6. Before committing save transaction");
         transaction.commit();
-        session.close();
+      //  session.close();
     }
 
     public static A getItem(String l) {
-
+        log("getItem: " + l);
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-
         //save example - without transaction
         Session session = sessionFactory.openSession();
         Transaction tx1 = session.beginTransaction();
         A toUpdateItem = (A) session.load(A.class, l);
-
-        //update some data
-        System.out.println("Employee Details=" + toUpdateItem);
-
-        System.out.println("6. Before committing save transaction");
         tx1.commit();
-        session.close();
+       // session.close();
         return toUpdateItem;
     }
 }

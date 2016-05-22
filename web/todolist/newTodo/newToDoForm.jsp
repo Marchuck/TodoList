@@ -1,5 +1,5 @@
 <%@ page %>
-<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.A" scope="application"/>
+<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.A" scope="session"/>
 <%--
   Created by IntelliJ IDEA.
   User: lukasz

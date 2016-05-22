@@ -1,8 +1,7 @@
-<%@ page import="pl.lukaszmarczak.todolist.TodoDbManager" %>
 <%@ page import="pl.lukaszmarczak.todolist.A" %>
-<%@ page import="pl.lukaszmarczak.todolist.TodoDbHibernateManager" %>
+<%@ page import="pl.lukaszmarczak.todolist.HibernateManager" %>
 <%@ page %>
-<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.A" scope="application"/>
+<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.A" scope="session"/>
 <%--
   Created by IntelliJ IDEA.
   User: lukasz
@@ -18,7 +17,7 @@
     <title>Create new task</title></head>
 <body>
 <% String index = request.getParameter("todo_id"); %>
-<% A it = TodoDbHibernateManager.getItem((index)); %>
+<% A it = HibernateManager.getItem(index); %>
 
 <form id="beauty" class="newtodoform" method="post" action="edit_todo_redirect.jsp">
     <ul>

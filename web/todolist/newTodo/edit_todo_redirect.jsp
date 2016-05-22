@@ -1,7 +1,7 @@
-<%@ page import="pl.lukaszmarczak.todolist.TodoDbManager" %>
+<%@ page import="pl.lukaszmarczak.todolist.TodoUtils" %>
 <%@ page import="pl.lukaszmarczak.todolist.A" %>
-<%@ page import="pl.lukaszmarczak.todolist.TodoDbHibernateManager" %>
-<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.A" scope="application"/>
+<%@ page import="pl.lukaszmarczak.todolist.HibernateManager" %>
+<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.A" scope="session"/>
 <jsp:setProperty name="item" property="*"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -18,9 +18,9 @@
 <% toUpdateItem.setId(index);%>
 <% toUpdateItem.setText(text);%>
 <% toUpdateItem.setDate(date);%>
-<%TodoDbManager.log("value of done: " + done);%>
+<%TodoUtils.log("value of done: " + done);%>
 <% toUpdateItem.setDone(done);%>
-<% TodoDbHibernateManager.update(toUpdateItem); %>
+<% HibernateManager.update(toUpdateItem); %>
 <% response.sendRedirect("showAllTodos.jsp"); %>
 </BODY>
 </HTML>
