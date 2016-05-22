@@ -1,5 +1,6 @@
 <%@ page import="pl.lukaszmarczak.todolist.TodoDbManager" %>
-<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.TodoItem" scope="application"/>
+<%@ page import="pl.lukaszmarczak.todolist.TodoDbHibernateManager" %>
+<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.A" scope="application"/>
 <jsp:setProperty name="item" property="*"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -8,7 +9,7 @@
 
 <% String text = request.getParameter("todo_text"); %>
 <% String date = request.getParameter("todo_date"); %>
-<% TodoDbManager.save(text, date); %>
+<% TodoDbHibernateManager.save(text, date); %>
 <% response.sendRedirect("showAllTodos.jsp"); %>
 </BODY>
 </HTML>

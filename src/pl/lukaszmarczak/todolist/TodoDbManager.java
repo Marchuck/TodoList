@@ -1,6 +1,7 @@
 package pl.lukaszmarczak.todolist;
 
 import com.sun.istack.internal.Nullable;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -21,7 +22,7 @@ import static sun.misc.MessageUtils.err;
 public class TodoDbManager {
 
     private static TodoDbManager instance;
-    private List<TodoItem> items = new ArrayList<>();
+    private List<A> items = new ArrayList<>();
 
     public synchronized static TodoDbManager getInstance() {
         return instance != null ? instance : new TodoDbManager();
@@ -31,17 +32,17 @@ public class TodoDbManager {
         instance = this;
     }
 
-    public synchronized static List<TodoItem> getToDoItems() {
+    public synchronized static List<A> getToDoItems() {
         log("Fetching all todo items");
         return getInstance().items;
     }
 
     @Nullable
-    public synchronized static TodoItem getItem(long id) {
-        for (TodoItem it : getInstance().items) {
-            if (Long.compare(id, it.getId()) == 0) {
+    public synchronized static A getItem(String id) {
+        for (A it : getInstance().items) {
+            if (it.getId().equals(id))
                 return it;
-            }
+
         }
         return null;
     }
@@ -71,11 +72,11 @@ public class TodoDbManager {
         System.out.println("session closed");
     }
 
-    public synchronized static void update(TodoItem item) {
+    public synchronized static void update(A item) {
         log("item to update: " + item);
         for (int j = 0; j < getInstance().items.size(); j++) {
-            TodoItem it = getInstance().items.get(j);
-            if (Long.compare(item.getId(), it.getId()) == 0) {
+            A it = getInstance().items.get(j);
+            if (item.getId().equals(it.getId())) {
                 it.setDate(item.getDate());
                 it.setText(item.getText());
                 it.setDone(item.isDone());
@@ -86,20 +87,20 @@ public class TodoDbManager {
         err("item not found");
     }
 
-    public static void delete(long itemId) {
+    public static void delete(String itemId) {
         int index = -1;
         for (int j = 0; j < getInstance().items.size(); j++) {
-            TodoItem it = getInstance().items.get(j);
-            if (Long.compare(itemId, it.getId()) == 0) {
+            A it = getInstance().items.get(j);
+            if ( itemId.equals(it.getId())) {
                 index = j;
                 break;
             }
         }
         if (index != -1) {
             getInstance().items.remove(index);
-            log("Deleted item " + itemId);
+          //  log("Deleted item " + itemId);
         } else {
-            log("Cannot find item " + itemId);
+ //           log("Cannot find item " + itemId);
         }
     }
 
@@ -107,15 +108,15 @@ public class TodoDbManager {
         System.out.println(s);
     }
 
-    public static String drawStrikeStart(TodoItem item1) {
+    public static String drawStrikeStart(A item1) {
         return item1.isDone() ? "<strike>" : "";
     }
 
-    public static String drawStrikeEnd(TodoItem item1) {
+    public static String drawStrikeEnd(A item1) {
         return item1.isDone() ? "</strike>" : "";
     }
 
-    public static String getChecked(TodoItem it) {
+    public static String getChecked(A it) {
         return it.isDone() ? "checked" : "unchecked";
     }
 }

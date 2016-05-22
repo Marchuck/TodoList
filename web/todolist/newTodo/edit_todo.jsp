@@ -1,7 +1,8 @@
 <%@ page import="pl.lukaszmarczak.todolist.TodoDbManager" %>
-<%@ page import="pl.lukaszmarczak.todolist.TodoItem" %>
+<%@ page import="pl.lukaszmarczak.todolist.A" %>
+<%@ page import="pl.lukaszmarczak.todolist.TodoDbHibernateManager" %>
 <%@ page %>
-<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.TodoItem" scope="application"/>
+<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.A" scope="application"/>
 <%--
   Created by IntelliJ IDEA.
   User: lukasz
@@ -17,7 +18,7 @@
     <title>Create new task</title></head>
 <body>
 <% String index = request.getParameter("todo_id"); %>
-<% TodoItem it = TodoDbManager.getItem(Long.parseLong(index)); %>
+<% A it = TodoDbHibernateManager.getItem((index)); %>
 
 <form id="beauty" class="newtodoform" method="post" action="edit_todo_redirect.jsp">
     <ul>
@@ -34,8 +35,7 @@
             </span>
         </li>
         <li><label class="isdone" for="checkbox_id">Done</label>
-            <input id="checkbox_id" type="checkbox" name="todo_done" value="<%=it.isDone() %>" onclick="<%
-            it.setDone(!it.isDone());%>" <%=TodoDbManager.getChecked(it)%>><br>
+            <input id="checkbox_id" type="checkbox" name="todo_done" value="true"><br>
         </li>
         <li>
             <input id="edit" class="button_text" type="submit" name="submit" value="Finish editing"/>

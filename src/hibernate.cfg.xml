@@ -4,10 +4,10 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:mysql://localhost:3306/enigma</property>
+    <property name="connection.url">jdbc:mysql://localhost:3307/enigma</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="connection.username">root</property>
-    <property name="connection.password">koU69wjupm&</property>
+    <property name="connection.password"></property>
 
       <!--<property name="connection.driver_class">com.mysql.jdbc.Driver</property>-->
       <!--<property name="connection.url">jdbc:mysql://localhost:3306/enigma</property>-->
@@ -20,9 +20,8 @@
       <property name="show_sql">true</property>
       <!--<property name="hbm2ddl.auto">update</property>-->
 
-
     <mapping class="pl.lukaszmarczak.todolist.A"/>
     <!-- DB schema will be updated if needed -->
-    <!-- <property name="hbm2ddl.auto">update</property> -->
+     <!--<property name="hbm2ddl.auto">update</property> -->
   </session-factory>
 </hibernate-configuration>

@@ -1,7 +1,8 @@
 <%@ page import="pl.lukaszmarczak.todolist.TodoDbManager" %>
-<%@ page import="pl.lukaszmarczak.todolist.TodoItem" %>
+<%@ page import="pl.lukaszmarczak.todolist.A" %>
 <%@ page import="java.util.List" %>
-<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.TodoItem" scope="session"/>
+<%@ page import="pl.lukaszmarczak.todolist.TodoDbHibernateManager" %>
+<jsp:useBean id="item" class="pl.lukaszmarczak.todolist.A" scope="session"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%--
@@ -22,12 +23,13 @@
 
     <A HREF="newToDoForm.jsp">Add new</A><br/><br/>
     <%
-        List<TodoItem> items = TodoDbManager.getToDoItems();
-        for (TodoItem item1 : items) { %>
+        List<A> items = TodoDbHibernateManager.getToDoItems();
+        for (A item1 : items) { %>
     <div id="beauty">
         <%=TodoDbManager.drawStrikeStart(item1)%>
         <%="todo: " + item1.getText() + "\t\t deadline:" + item1.getDate() %>
         <%=TodoDbManager.drawStrikeEnd(item1)%>
+
         <br/>
         <form id="delete_todo_form" class="delete_todo_class" method="post" action="delete_todo.jsp">
             <input id="delete" name="todo_id" class="date" size="32" type="hidden" value="<%=item1.getId() %>"/>

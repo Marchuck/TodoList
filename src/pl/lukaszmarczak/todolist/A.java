@@ -1,10 +1,6 @@
 package pl.lukaszmarczak.todolist;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
+import javax.persistence.*;
 /**
  * TodoList
  *
@@ -13,10 +9,13 @@ import javax.persistence.OneToOne;
  * 16 : 51
  */
 @Entity
+@Table(name = "A")
+@Access(value = AccessType.FIELD)
 public class A {
+    @Id
+    @Column(name = "id")
     private String id;
 
-    @Id
     public String getId() {
         return id;
     }
@@ -25,6 +24,8 @@ public class A {
         this.id = id;
     }
 
+
+    @Column(name = "text")
     private String text;
 
     @Basic
@@ -36,6 +37,7 @@ public class A {
         this.text = text;
     }
 
+    @Column(name = "date")
     private String date;
 
     @Basic
@@ -47,6 +49,7 @@ public class A {
         this.date = date;
     }
 
+    @Column(name = "done")
     private boolean done;
 
     @Basic
